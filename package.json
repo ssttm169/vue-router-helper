@@ -1,0 +1,24 @@
+{
+  "name": "vue-router-helper",
+  "version": "1.0.0",
+  "description": "a plugin for vue router,which can generate config automatically.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssttm169/vue-router-helper.git"
+  },
+  "keywords": [
+    "vue-router",
+    "vue-router-config",
+    "vue-router-helper"
+  ],
+  "author": "tomtan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ssttm169/vue-router-helper/issues"
+  },
+  "homepage": "https://github.com/ssttm169/vue-router-helper#readme"
+}
