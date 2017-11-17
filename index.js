@@ -95,6 +95,9 @@ function generateRouter() {
 }
 
 
+
+
+
 function createFolder(to) { //文件写入
     var sep = path.sep
     var folders = path.dirname(to).split(sep);
@@ -106,6 +109,67 @@ function createFolder(to) { //文件写入
         }
     }
 };
+
+
+function template(path) {
+
+    var temp_name = path.slice(path.lastIndexOf('\\') + 1).replace('.vue', '');
+
+
+    var strVar = "";
+    strVar += "<template>\n";
+    strVar += "    <div class=\"" + temp_name + "\">\n";
+    strVar += "    <\/div>\n";
+    strVar += "<\/template>\n";
+    strVar += "\n";
+    strVar += "<script>\n";
+    strVar += "export default {\n";
+    strVar += "    name: '" + temp_name + "',\n";
+    strVar += "    data(){\n";
+    strVar += "        return {\n";
+    strVar += "\n";
+    strVar += "        }\n";
+    strVar += "    },\n";
+    strVar += "\n";
+    strVar += "    created() {\n";
+    strVar += "\n";
+    strVar += "    },\n";
+    strVar += "\n";
+    strVar += "    components: {\n";
+    strVar += "\n";
+    strVar += "    },\n";
+    strVar += "\n";
+    strVar += "    computed: {\n";
+    strVar += "\n";
+    strVar += "    },\n";
+    strVar += "\n";
+    strVar += "    mounted(){\n";
+    strVar += "\n";
+    strVar += "    },\n";
+    strVar += "\n";
+    strVar += "    methods: {\n";
+    strVar += "\n";
+    strVar += "    }\n";
+    strVar += "}\n";
+    strVar += "<\/script>\n";
+    strVar += "\n";
+    strVar += "<style lang=\"scss\" scoped>\n";
+    strVar += "\n";
+    strVar += "<\/style>\n";
+    strVar += "\n";
+    return strVar;
+}
+
+
+function writeTemplate(path) {
+
+    fs.writeFile(path, template(path), function (err) {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
 
 
 function doRouter() {
@@ -122,10 +186,13 @@ function doRouter() {
         if (err) {
             throw err;
         }
+
+
         //var file_path = path.resolve(__dirname, '../', pluginOptions.config + '/' + pluginOptions.filename);
         //console.log(  file_path + ' is generated.');
     });
 }
+
 
 
 function readDirSync(path) {
@@ -173,34 +240,41 @@ var watch = function () {
     // 文件新增时
     function addFileListener(path_) {
         if (ready) {
-            doRouter();
+
+            new Promise((resolve, reject) => {
+                doRouter();
+                resolve();
+            }).then(() => {
+                writeTemplate(path_);
+            });
+
             //console.log('ROUTER_ROOT_PATH:' + ROUTER_ROOT_PATH)
-            //console.log('File', path_, 'has been added')
+            console.log('File', path_, 'has been added')
         }
     }
     function addDirecotryListener(path) {
         if (ready) {
             doRouter();
-            //console.log('Directory', path, 'has been added')
+            console.log('Directory', path, 'has been added')
         }
     }
 
     // 文件内容改变时
     function fileChangeListener(path_) {
         doRouter();
-        //console.log('File', path_, 'has been changed')
+        console.log('File', path_, 'has been changed')
     }
 
     // 删除文件时，需要把文件里所有的用例删掉
     function fileRemovedListener(path_) {
         doRouter();
-        //console.log('File', path_, 'has been removed')
+        console.log('File', path_, 'has been removed')
     }
 
     // 删除目录时
     function directoryRemovedListener(path) {
         doRouter();
-        //console.info('Directory', path, 'has been removed')
+        console.info('Directory', path, 'has been removed')
     }
 
     if (!watcher) {
@@ -230,7 +304,7 @@ function VueRouterHelper(options) {
 
     //初始化路径
     pluginOptions = options;
-    var _path = path.resolve(__dirname, '../', pluginOptions.watch);
+    var _path = path.resolve(__dirname, '../../', pluginOptions.watch);
 
     fs.exists(_path, function (exists) {
         if (exists) {
@@ -241,8 +315,8 @@ function VueRouterHelper(options) {
         }
     });
 
-    ROOT_PATH.watch = path.resolve(path.resolve(__dirname), '../', pluginOptions.watch);
-    ROOT_PATH.config = path.resolve(path.resolve(__dirname), '../', pluginOptions.config);
+    ROOT_PATH.watch = path.resolve(path.resolve(__dirname), '../../', pluginOptions.watch);
+    ROOT_PATH.config = path.resolve(path.resolve(__dirname), '../../', pluginOptions.config);
 }
 
 VueRouterHelper.prototype.apply = function (compiler) {

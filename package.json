@@ -1,6 +1,6 @@
 {
   "name": "vue-router-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a plugin for vue router,which can generate config automatically.",
   "main": "index.js",
   "scripts": {

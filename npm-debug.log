@@ -45,9 +45,10 @@
 21 silly publish   license: 'MIT',
 21 silly publish   bugs: { url: 'https://github.com/ssttm169/vue-router-helper/issues' },
 21 silly publish   homepage: 'https://github.com/ssttm169/vue-router-helper#readme',
+21 silly publish   gitHead: '773db786b5ce45abb839cd28043918a0d305001b',
 21 silly publish   readme: 'ERROR: No README data found!',
 21 silly publish   _id: 'vue-router-helper@1.0.0',
-21 silly publish   _shasum: 'f577c753ebe49574491e9609a601e963dec344ff',
+21 silly publish   _shasum: '2e997420e0b9ef6ce3fc8b6f31c286b99bd3f477',
 21 silly publish   _from: '.' }
 22 verbose getPublishConfig undefined
 23 silly mapToRegistry name vue-router-helper
