@@ -64,20 +64,23 @@ function generateRouter() {
         strVar += '    component: resolve => require(["' + router_path[i].component.replace('src/', '../') + '"], resolve)\n'
         strVar += '  },\n\n'
 
-        if (router_path[i].path.replace('.vue', '') == '/index') { indexed.is = true, indexed.i = i }
+        if (_path == '/index') { indexed.is = true, indexed.i = i }
     }
 
     // set home
     if (indexed.is) {
+
+
+
         strVar += '  {\n'
         strVar += '    path: "*",\n'
-        strVar += '    name: "' + _name + '",\n'
+        strVar += '    name: "index",\n'
         strVar += '    component: resolve => require(["' + router_path[indexed.i].component.replace('src/', '../') + '"], resolve)\n'
         strVar += '  },\n\n'
 
         strVar += '  {\n'
         strVar += '    path: "/",\n'
-        strVar += '    name: "' + _name + '",\n'
+        strVar += '    name: "index",\n'
         strVar += '    component: resolve => require(["' + router_path[indexed.i].component.replace('src/', '../') + '"], resolve)\n'
         strVar += '  }\n\n'
     }
@@ -163,11 +166,22 @@ function template(path) {
 
 function writeTemplate(path) {
 
-    fs.writeFile(path, template(path), function (err) {
-        if (err) {
-            throw err;
+    fs.readFile(path, function (err, data) {
+        if (err) throw err;
+
+        if (data.toString() == '') {
+
+            fs.writeFile(path, template(path), function (err) {
+                if (err) {
+                    throw err;
+                }
+            });
         }
     });
+
+
+
+
 }
 
 
@@ -186,10 +200,6 @@ function doRouter() {
         if (err) {
             throw err;
         }
-
-
-        //var file_path = path.resolve(__dirname, '../', pluginOptions.config + '/' + pluginOptions.filename);
-        //console.log(  file_path + ' is generated.');
     });
 }
 
